@@ -7,11 +7,17 @@ global using CyberSecurityNextApi.Dtos.User;
 global using Microsoft.AspNetCore.Authorization;
 global using Microsoft.AspNetCore.Mvc;
 global using System.Security.Claims;
+global using System.ComponentModel.DataAnnotations.Schema;
+global using CyberSecurityNextApi.Services.DuplicateEntryService;
+global using CyberSecurityNextApi.Services.CurrentUserService;
+global using CyberSecurityNextApi.Services.FileUploadService;
+global using CyberSecurityNextApi.Services.SlugService;
+global using Microsoft.OpenApi.Models;
+global using Microsoft.IdentityModel.Tokens;
+global using CyberSecurityNextApi.Services.CategoryService;
+global using CyberSecurityNextApi.Services.PostService;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
-using Microsoft.IdentityModel.Tokens;
-using Microsoft.OpenApi.Models;
 using Swashbuckle.AspNetCore.Filters;
-using CyberSecurityNextApi.Services.CategoryService;
 
 
 var builder = WebApplication.CreateBuilder(args);
@@ -24,7 +30,6 @@ options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnectio
 builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
-//builder.Services.AddSwaggerGen();
 
 builder.Services.AddSwaggerGen(c =>
 {
@@ -43,6 +48,11 @@ builder.Services.AddAutoMapper(typeof(Program).Assembly);
 
 builder.Services.AddScoped<IAuthRepository, AuthRepository>();
 builder.Services.AddScoped<ICategoryService, CategoryService>();
+builder.Services.AddScoped<IPostService, PostService>();
+builder.Services.AddScoped<IDuplicateEntryHandler, DuplicateEntryHandlerService>();
+builder.Services.AddScoped<IUserIdentityService, UserIdentityService>();
+builder.Services.AddScoped<IFileUploadService, FileUploadService>();
+builder.Services.AddScoped<ISlugService, SlugService>();
 builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
     .AddJwtBearer(options =>
     {

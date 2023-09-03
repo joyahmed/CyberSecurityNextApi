@@ -7,12 +7,13 @@ namespace CyberSecurityNextApi.Data
         {
         }
 
-
         public DbSet<User> Users => Set<User>();
 
         public DbSet<Role> Roles => Set<Role>();
 
         public DbSet<Category> Categories => Set<Category>();
+        public DbSet<Post> Posts => Set<Post>();
+        public DbSet<Tag> Tag => Set<Tag>();
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -30,6 +31,18 @@ namespace CyberSecurityNextApi.Data
 
             modelBuilder.Entity<Category>()
                 .HasIndex(c => c.CategoryName)
+                .IsUnique();
+
+            modelBuilder.Entity<Post>()
+     .HasIndex(p => p.CategoryId)
+     .IsUnique();
+
+            modelBuilder.Entity<Post>()
+                .HasIndex(p => p.PostTitle)
+                .IsUnique();
+
+            modelBuilder.Entity<Post>()
+                .HasIndex(p => p.Subtitle)
                 .IsUnique();
         }
     }

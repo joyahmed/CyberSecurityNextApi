@@ -4,6 +4,7 @@ using CyberSecurityNextApi.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace CyberSecurityNextApi.Migrations
 {
     [DbContext(typeof(DataContext))]
-    partial class DataContextModelSnapshot : ModelSnapshot
+    [Migration("20230903022019_PostAndTag")]
+    partial class PostAndTag
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -141,7 +144,7 @@ namespace CyberSecurityNextApi.Migrations
                     b.HasIndex("Subtitle")
                         .IsUnique();
 
-                    b.ToTable("Posts");
+                    b.ToTable("Post");
                 });
 
             modelBuilder.Entity("CyberSecurityNextApi.Models.Role", b =>
