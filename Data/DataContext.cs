@@ -23,6 +23,14 @@ namespace CyberSecurityNextApi.Data
                 new Role { Id = 2, Name = "Admin" },
                 new Role { Id = 3, Name = "User" }
             );
+
+            modelBuilder.Entity<Category>()
+                .HasIndex(c => c.Menu)
+                .IsUnique();
+
+            modelBuilder.Entity<Category>()
+                .HasIndex(c => c.CategoryName)
+                .IsUnique();
         }
     }
 }

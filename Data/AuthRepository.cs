@@ -55,7 +55,6 @@ namespace CyberSecurityNextApi.Data
 
                 _context.Users.Remove(user);
 
-
                 await _context.SaveChangesAsync();
 
                 response.Data = await _context.Users.Select(u => _mapper.Map<GetUserDto>(u)).ToListAsync();
@@ -77,7 +76,7 @@ namespace CyberSecurityNextApi.Data
 
 
             var user = await _context.Users.FirstOrDefaultAsync(u => u.Email == email || u.Name == name);
-                     
+
 
 
             if(user is null) {
@@ -106,7 +105,7 @@ namespace CyberSecurityNextApi.Data
             {
                 Data = user.Id
             };
-            
+
 
             if (await UserExists(user.Email))
             {
@@ -118,9 +117,7 @@ namespace CyberSecurityNextApi.Data
             CreatepasswordHash(password, out byte[] passwordHash, out byte[] passwordSalt);
 
             user.PasswordHash = passwordHash;
-            user.PassworSalt = passwordSalt;    
-
-            
+            user.PassworSalt = passwordSalt;
 
             _context.Users.Add(user);
             await _context.SaveChangesAsync();
@@ -130,7 +127,7 @@ namespace CyberSecurityNextApi.Data
 
         public async Task<ServiceResponse<GetUserDto>> UpdateUser(int? userId, UpdateUserDto updatedUser)
         {
-            var response = new ServiceResponse<GetUserDto>();      
+            var response = new ServiceResponse<GetUserDto>();
 
             try
             {
@@ -153,7 +150,7 @@ namespace CyberSecurityNextApi.Data
                 user.PasswordHash = passwordHash;
                 user.PassworSalt = passwordSalt;
 
-          
+
                 user.UpdatedBy = userId;
 
                 await _context.SaveChangesAsync();
